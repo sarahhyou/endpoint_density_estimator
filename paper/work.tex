@@ -1,0 +1,131 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Journal Article
+% LaTeX Template
+% Version 2.0 (February 7, 2023)
+%
+% This template originates from:
+% https://www.LaTeXTemplates.com
+%
+% Author:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/)
+%
+% NOTE: The bibliography needs to be compiled using the biber engine.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+	letterpaper, % Paper size, use either a4paper or letterpaper
+	10pt, % Default font size, can also use 11pt or 12pt, although this is not recommended
+	unnumberedsections, % Comment to enable section numbering
+	twoside, % Two side traditional mode where headers and footers change between odd and even pages, comment this option to make them fixed
+]{LTJournalArticle}
+
+\addbibresource{work.bib} % BibLaTeX bibliography file
+
+\runninghead{Constructing a Constant-Scaling Density Estimator} % A shortened article title to appear in the running head, leave this command empty for no running head
+
+\footertext{\textit{arXiv hopefully}} % Text to appear in the footer, leave this command empty for no footer text
+
+\setcounter{page}{1} % The page number of the first page, set this to a higher number if the article is to be part of an issue or larger work
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{Constructing a Constant-Scaling Density Estimator} % Article title, use manual lines breaks (\\) to beautify the layout
+
+% Authors are listed in a comma-separated list with superscript numbers indicating affiliations
+% \thanks{} is used for any text that should be placed in a footnote on the first page, such as the corresponding author's email, journal acceptance dates, a copyright/license notice, keywords, etc
+\author{%
+	Sarah You\textsuperscript{1} and Friends\textsuperscript{1}\thanks{Corresponding author: \href{mailto:aryan@email.com}{aryan@email.com}\\}
+}
+
+% Affiliations are output in the \date{} command
+\date{\footnotesize\textsuperscript{\textbf{1}}Department of Statistics and Actuarial Science, University of Western Ontario\\}
+
+% Full-width abstract
+\renewcommand{\maketitlehookd}{%
+	\begin{abstract}
+		\noindent To be completed eventually. Tbh I'm not sure what I can write on here. I'm not even sure if this is ever going to get published.
+		I don't think this is getting anywhere and I'm just wasting my own and my professor's time. I feel stupid and worthless and I will never 
+		be able to produce any research that is worthwhile. I am never getting into graduate school. I should commit toaster bath.
+	\end{abstract}
+}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Output the title section
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+\section{Introduction}
+
+The current most popular estimation methods of unknown underlying probability density function from an observed sample of data is to apply 
+kernel density estimation. The construction is as follows: Let $(x_1,x_2...,x_n)$ be independent and identically distributed samples drawn from some univariate 
+distribution with unknown density $f$ at at any given point $x_i$. To estimate the shape of function $f$, we take a moving average estimate, called a \textit{kernel}
+, shown below,
+\begin{equation}
+	\hat{f}_\lambda(x) = \frac{1}{n}\sum_{i=1}^{n}K_\lambda(x-x_i) = \frac{1}{n\lambda}\sum_{i=1}^{n}K\big(\frac{x-x_i}{\lambda}\big)
+\end{equation}
+where $K$ is the smoothing kernel and $\lambda$ is a smoothing parameter called the bandwidth (cite Faraway edition 2 page 299). The kernel function $K$ must obey 
+several properties. It must be a smooth function where $\int K(x)dx = 1$, $\int xK(x)dx = 0$, and $\sigma_K^2 = \int x^2K(x)dx > 0$ (cite CMU page 6). This technique 
+provides a smooth estimate of the pdf and uses all sample points, which is not possible to do by looking at the histogram alone, the once popular method of estimating
+a sample's underlying distribution (cite Weglarczyk). 
+
+However, there are several disadvantages to performing Kernel Density Estimation. Firstly, kernel density estimation produces a constant bias, particulary near the boundaries
+of datasets with a bounded support. Furthermore, if the underlying distribution has a longer tail/tails, the "main" component of the distribution risks over-smoothing 
+(cite Zambom). Considering the Beta distribution both has a a bounded support over $(0,1)$, and has heavy-tailed distributions depending on the magnitude of their shape 
+and scale parameters, Kernel Density Estimation is wholly not suitable. This article attempts to find a method to use constant scaling to estimate if an underlying 
+distribution is a beta distribution, which could significantly simply the estimation process both in time and computational resources.
+
+%------------------------------------------------
+
+\section{Methodology}
+
+\subsection{Simulation Procedure for Trend Estimation}
+
+Data for the following analysis were simulated using the following procedure.
+\begin{enumerate}
+	\item Let $X_1, X_2,...X_n \sim Beta(\alpha, \beta)$, $n \in \mathds{N}$ and is sufficiently large, and $\alpha,\hspace{0.2cm}\beta > 0$.
+	\item Let $Y_1,Y_2,...Y_n$ be the upper p percent of $X_1,X_2,...X_n$. 
+	Define $$\bar{y} = \frac{\sum_{i=1}^{n}y_i}{n}$$
+	and $$s^2 = \frac{\sum_{i=1}^{n}(y_i-\bar{y})}{n-1}$$.
+	\item Construct a constant $c$ such that $cs + Y_{(n)} = 1$, where $Y_{(n)}$ denotes the sample maximum. Then 
+	$$c = \frac{1-Y_{(n)}}{s}$$.
+	\item 
+\end{enumerate}
+
+\subsection{Graphical Output - Base Scenario}
+
+\subsection{Issues in Research Process}
+
+
+%------------------------------------------------
+
+\section{Results}
+
+To be filled when there are results
+%------------------------------------------------
+
+\section{Discussion}
+
+%----------------------------------------------------------------------------------------
+%	 REFERENCES
+%----------------------------------------------------------------------------------------
+
+\printbibliography % Output the bibliography
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
